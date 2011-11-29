@@ -94,9 +94,9 @@ module AutoCompleteMacrosHelper
   # The auto_complete_result can of course also be called from a view belonging to the 
   # auto_complete action if you need to decorate it further.
   def auto_complete_result(entries, field, phrase = nil)
-    return unless entries
+    return content_tag('ul', content_tag('li', 'Not found', :class => 'not_found')) if entries.nil? || entries.empty?
     items = entries.map { |entry| content_tag("li", phrase ? highlight(entry[field], phrase) : h(entry[field])) }
-    content_tag("ul", items.uniq)
+    content_tag("ul", items.uniq.join)
   end
   
   # Wrapper for text_field with added AJAX autocompletion functionality.

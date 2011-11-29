@@ -1,4 +1,8 @@
-require File.expand_path(File.join(File.dirname(__FILE__), '../../../../test/test_helper')) 
+require 'test/unit'
+require 'action_view'
+require 'action_controller'
+require_relative '../lib/auto_complete.rb'
+require_relative '../lib/auto_complete_macros_helper.rb'
 
 class AutoCompleteTest < Test::Unit::TestCase
   include AutoComplete
@@ -9,7 +13,11 @@ class AutoCompleteTest < Test::Unit::TestCase
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::CaptureHelper
-  
+
+  # Needed for test methods
+  include ActionController::Assertions::DomAssertions	
+  include ActionController::TestCase::Assertions
+
   def setup
     @controller = Class.new do
       def url_for(options)
@@ -54,6 +62,10 @@ class AutoCompleteTest < Test::Unit::TestCase
     resultuniq = [ { :title => 'test1'  }, { :title => 'test1'  } ]
     assert_equal %(<ul><li>t<strong class=\"highlight\">est</strong>1</li></ul>), 
       auto_complete_result(resultuniq, :title, "est")
+
+    resultnotfound = []
+    assert_equal %(<ul><li class=\"not_found\">Not found</li></ul>),
+      auto_complete_result(resultnotfound, :title, "est")
   end
   
   def test_text_field_with_auto_complete
