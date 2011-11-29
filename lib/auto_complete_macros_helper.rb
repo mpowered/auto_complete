@@ -120,17 +120,20 @@ module AutoCompleteMacrosHelper
         }
         div.auto_complete ul {
           border:1px solid #888;
-          margin:0;
-          padding:0;
+          margin:0 !important;
+          padding:0 !important;
           width:100%;
           list-style-type:none;
         }
         div.auto_complete ul li {
-          margin:0;
-          padding:3px;
+          margin:0 !important;
+          padding:3px !important;
         }
         div.auto_complete ul li.selected {
           background-color: #ffb;
+        }
+        div.auto_complete ul li.not_found {
+          background-color: #FCACAC
         }
         div.auto_complete ul strong.highlight {
           color: #800; 
